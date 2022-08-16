@@ -6,5 +6,6 @@ const pool = new Client({
         rejectUnauthorized: false,
     }
 });
+db.connect();
 
 module.exports = pool;
