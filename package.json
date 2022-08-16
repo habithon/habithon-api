@@ -6,7 +6,7 @@
     "dev": "nodemon -L index.js",
     "start": "node index.js",
     "seed": "node dbConfig/seedDev.js",
-    "test": "jest --setupFiles ./tests/integration/config.js --watchAll --verbose --detectOpenHandles --coverage",
+    "test": "jest --setupFiles ./tests/integration/config.js --watchAll --verbose --coverage",
     "unitTests": "jest --testPathPattern=/unit/ --watchAll --verbose",
     "coverage": "jest --testPathPattern=/unit/ --coverage"
   },
