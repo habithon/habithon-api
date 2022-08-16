@@ -10,11 +10,12 @@ class User {
   static getOneByUsername(username) {
     return new Promise(async (resolve, reject) => {
       try {
+        db.connect();
         const userData = await db.query(
           `SELECT * FROM user_account WHERE username = $1;`,
           [username]
         );
-
+        db.close();
         const user = new User(userData.rows[0]);
         resolve(user);
       } catch (err) {
