@@ -8,7 +8,7 @@ async function createToken(userData) {
     {
       user_id: userData["id"],
     },
-    process.env["SECRET_PASSWORD"],
+    'qwerty',
     { expiresIn: 60 * 60 }
   );
 
