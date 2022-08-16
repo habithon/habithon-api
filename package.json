@@ -3,7 +3,9 @@
   "license": "ISC",
   "description": "LAP 2 project",
   "scripts": {
-    "start": "nodemon -L index.js",
+    "dev": "nodemon -L index.js",
+    "start": "node index.js",
+    "seed": "node dbConfig/seedDev.js",
     "test": "jest --setupFiles ./tests/integration/config.js --watchAll --verbose --detectOpenHandles --coverage",
     "unitTests": "jest --testPathPattern=/unit/ --watchAll --verbose",
     "coverage": "jest --testPathPattern=/unit/ --coverage"
