@@ -18,7 +18,15 @@ module.exports = class Goal {
           [user_id]
         );
 
-        const goal = userData.rows.map((a) => new Goal(a));
+        const goal = userData.rows.map((a) => {
+          this.calculateStreak(
+            a.last_completed,
+            new Date(),
+            a.frequency,
+            a.streak
+          );
+          return new Goal(a);
+        });
         resolve(goal);
       } catch (err) {
         console.log(err);
@@ -33,14 +41,39 @@ module.exports = class Goal {
         const userData = await db.query(`SELECT * FROM habit WHERE id = $1;`, [
           id,
         ]);
-
+        this.calculateStreak(
+          userData.rows[0].last_completed,
+          new Date(),
+          userData.rows[0].frequency,
+          userData.rows[0].streak
+        );
         const goal = new Goal(userData.rows[0]);
+
         resolve(goal);
       } catch (err) {
         console.log(err);
         reject("Unable to locate user.");
       }
     });
+  }
+
+  static calculateStreak(lastCompleted, currentDate, frequency, streak) {
+    const last = Date.parse(lastCompleted);
+    const current = Date.parse(currentDate);
+    let frequencyNumber = "";
+    if (frequency == "daily") {
+      frequencyNumber = 86400000;
+    } else if (frequency == "weekly") {
+      frequencyNumber = 604800000;
+    } else {
+      frequencyNumber = 2678400000;
+    }
+
+    if (last + frequencyNumber >= current) {
+      console.log(streak);
+    } else {
+      console.log(0);
+    }
   }
 
   static create(data) {
