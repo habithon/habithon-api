@@ -23,7 +23,7 @@ class User {
     });
   }
 
-  static registerUser(username, hash) {
+  static registerUser(username, hash, fullName, email) {
     return new Promise(async (resolve, reject) => {
       const user = await db.query(
         "SELECT * FROM user_account WHERE username = $1",
@@ -33,8 +33,8 @@ class User {
       if (typeof user.rows[0] == "undefined") {
         try {
           const userData = await db.query(
-            "INSERT INTO user_account (username, password) VALUES ($1, $2) RETURNING *;",
-            [username, hash]
+            "INSERT INTO user_account (username, password, full_name, email) VALUES ($1, $2, $3, $4) RETURNING *;",
+            [username, hash, fullName, email]
           );
           const newUser = new User(userData.rows[0]);
           resolve(newUser);
