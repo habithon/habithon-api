@@ -47,8 +47,8 @@ module.exports = class Goal {
     return new Promise(async (resolve, reject) => {
       try {
         const goalData = await db.query(
-          "INSERT INTO habit (user_id, habit, streak, frequency, last_completed) VALUES ($1, $2, $3, $4, NOW()) RETURNING *;",
-          [data.user_id, data.habit, 0, data.frequency]
+          "INSERT INTO habit (user_id, habit, frequency, last_completed) VALUES ($1, $2, $3, NOW()) RETURNING *;",
+          [data.user_id, data.habit, data.frequency]
         );
         const habit = new Goal(goalData.rows[0]);
         resolve(habit);
