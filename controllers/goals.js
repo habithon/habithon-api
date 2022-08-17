@@ -53,6 +53,16 @@ async function create(req, res) {
   }
 }
 
+const update = async (req, res) => {
+  try {
+    const goal = await Goal.findById(req.params.id);
+    const update = await goal.update(goal.id, req.body.streak);
+    res.status(201).send({ body: update, message: "updated" });
+  } catch (e) {
+    res.status(404).send({ message: "id not found" });
+  }
+};
+
 async function destroy(req, res) {
   try {
     const habit = await Goal.showOne(req.params.id);

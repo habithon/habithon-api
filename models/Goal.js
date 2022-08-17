@@ -91,6 +91,21 @@ module.exports = class Goal {
       }
     });
   }
+
+  update(id, streak) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        await db.query(
+          "UPDATE habit SET streak=$1 WHERE id = $2 RETURNING user_id",
+          [id, streak]
+        );
+        resolve("Habit was updated");
+      } catch (err) {
+        reject("Habit could not be updated");
+      }
+    });
+  }
+
   destroy() {
     return new Promise(async (resolve, reject) => {
       try {
