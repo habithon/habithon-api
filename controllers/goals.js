@@ -74,4 +74,4 @@ async function destroy(req, res) {
   }
 }
 
-module.exports = { show, index, create, destroy };
+module.exports = { show, index, create, update, destroy };
