@@ -12,9 +12,9 @@ CREATE TABLE habit (
     id SERIAL PRIMARY KEY,
     user_id INT REFERENCES user_account(id),
     habit VARCHAR(50) NOT NULL,
-    streak INT NOT NULL,
+    streak INT DEFAULT 0,
     frequency VARCHAR(20) NOT NULL,
-    last_completed DATE
+    last_completed TIMESTAMPTZ
 );
 
 INSERT INTO user_account (username, password)
