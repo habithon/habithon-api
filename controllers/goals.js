@@ -55,7 +55,7 @@ async function create(req, res) {
 
 const update = async (req, res) => {
   try {
-    const goal = await Goal.findById(req.params.id);
+    const goal = await Goal.showOne(req.params.id);
     const update = await goal.update(goal.id, req.body.streak);
     res.status(201).send({ body: update, message: "updated" });
   } catch (e) {
