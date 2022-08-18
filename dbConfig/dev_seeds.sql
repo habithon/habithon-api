@@ -27,8 +27,8 @@ VALUES
 
 INSERT INTO habit (user_id, image_url, habit, streak, frequency, last_completed)
 VALUES
-(1, 'images/goals-water.jpg','water', 10, 'weekly', '2022-08-15'),
-(1, 'images/goals-exercise.jpg','exercise', 10, 'daily', '2022-08-15'),
+(1, 'images/goals-water.jpg','water', 10, 'weekly', '2022-08-17'),
+(1, 'images/goals-exercise.jpg','exercise', 10, 'daily', '2022-08-17'),
 (1, 'images/goals-reading.jpg','read', 10, 'daily', '2022-08-15'),
 (2, 'images/goals-sleep.jpg','sleep', 10, 'daily', '2022-08-15'),
 (2, 'images/goals-exercise.jpg','exercise', 10, 'daily', '2022-08-15');

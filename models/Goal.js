@@ -96,7 +96,7 @@ module.exports = class Goal {
     return new Promise(async (resolve, reject) => {
       try {
         await db.query(
-          "UPDATE habit SET streak=$1 WHERE id = $2 RETURNING user_id",
+          "UPDATE habit SET streak=$1, last_completed=NOW() WHERE id = $2 RETURNING user_id",
           [streak, id]
         );
         resolve("Habit was updated");
