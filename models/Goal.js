@@ -18,16 +18,14 @@ module.exports = class Goal {
           [user_id]
         );
 
-        const goal = userData.rows
-          .map(async (a) => {
-            return this.calculateStreak(
-              a.last_completed,
-              new Date(),
-              a.frequency,
-              a.streak
-            );
-          })
-          .then((a) => new Goal(a));
+        const goal = userData.rows.map((a) => {
+          return this.calculateStreak(
+            a.last_completed,
+            new Date(),
+            a.frequency,
+            a.streak
+          ).then((a) => new Goal(a));
+        });
         resolve(goal);
       } catch (err) {
         console.log(err);
@@ -92,12 +90,14 @@ module.exports = class Goal {
 
     if (last + frequencyNumber >= current) {
       console.log(streak);
+      return "";
     } else {
       console.log(0);
-      await db.query(
+      const res = await db.query(
         "UPDATE habit SET streak=0 WHERE id = $1 RETURNING user_id",
         [id]
       );
+      return res;
     }
   }
 
