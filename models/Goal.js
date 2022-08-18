@@ -18,16 +18,16 @@ module.exports = class Goal {
           [user_id]
         );
 
-        const goal = userData.rows.map(async (a) => {
-          await this.calculateStreak(
-            a.last_completed,
-            new Date(),
-            a.frequency,
-            a.streak,
-            a.id
-          );
-          return new Goal(a);
-        });
+        const goal = userData.rows
+          .map(async (a) => {
+            return this.calculateStreak(
+              a.last_completed,
+              new Date(),
+              a.frequency,
+              a.streak
+            );
+          })
+          .then((a) => new Goal(a));
         resolve(goal);
       } catch (err) {
         console.log(err);
