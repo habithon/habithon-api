@@ -72,7 +72,13 @@ module.exports = class Goal {
     });
   }
 
-  static calculateStreak(lastCompleted, currentDate, frequency, streak, id) {
+  static async calculateStreak(
+    lastCompleted,
+    currentDate,
+    frequency,
+    streak,
+    id
+  ) {
     const last = Date.parse(lastCompleted);
     const current = Date.parse(currentDate);
     let frequencyNumber = "";
@@ -88,7 +94,10 @@ module.exports = class Goal {
       console.log(streak);
     } else {
       console.log(0);
-      update(id, streak);
+      await db.query(
+        "UPDATE habit SET streak=$1, last_completed=NOW() WHERE id = $2 RETURNING user_id",
+        [streak, id]
+      );
     }
   }
 
