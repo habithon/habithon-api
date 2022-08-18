@@ -23,7 +23,8 @@ module.exports = class Goal {
             a.last_completed,
             new Date(),
             a.frequency,
-            a.streak
+            a.streak,
+            a.id
           );
           return new Goal(a);
         });
@@ -57,7 +58,7 @@ module.exports = class Goal {
     });
   }
 
-  static calculateStreak(lastCompleted, currentDate, frequency, streak) {
+  static calculateStreak(lastCompleted, currentDate, frequency, streak, id) {
     const last = Date.parse(lastCompleted);
     const current = Date.parse(currentDate);
     let frequencyNumber = "";
@@ -73,6 +74,7 @@ module.exports = class Goal {
       console.log(streak);
     } else {
       console.log(0);
+      update(id, streak);
     }
   }
 
