@@ -97,7 +97,7 @@ module.exports = class Goal {
       try {
         await db.query(
           "UPDATE habit SET streak=$1 WHERE id = $2 RETURNING user_id",
-          [id, streak]
+          [streak, id]
         );
         resolve("Habit was updated");
       } catch (err) {
