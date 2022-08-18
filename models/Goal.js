@@ -19,12 +19,14 @@ module.exports = class Goal {
         );
 
         const goal = userData.rows.map((a) => {
-          return this.calculateStreak(
+          this.calculateStreak(
             a.last_completed,
             new Date(),
             a.frequency,
-            a.streak
-          ).then((a) => new Goal(a));
+            a.streak,
+            a.id
+          );
+          return new Goal(a);
         });
         resolve(goal);
       } catch (err) {
@@ -90,14 +92,12 @@ module.exports = class Goal {
 
     if (last + frequencyNumber >= current) {
       console.log(streak);
-      return "";
     } else {
       console.log(0);
-      const res = await db.query(
+      await db.query(
         "UPDATE habit SET streak=0 WHERE id = $1 RETURNING user_id",
         [id]
       );
-      return res;
     }
   }
 
