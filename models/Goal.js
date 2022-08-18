@@ -58,6 +58,20 @@ module.exports = class Goal {
     });
   }
 
+  update(id, streak) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        await db.query(
+          "UPDATE habit SET streak=$1, last_completed=NOW() WHERE id = $2 RETURNING user_id",
+          [streak, id]
+        );
+        resolve("Habit was updated");
+      } catch (err) {
+        reject("Habit could not be updated");
+      }
+    });
+  }
+
   static calculateStreak(lastCompleted, currentDate, frequency, streak, id) {
     const last = Date.parse(lastCompleted);
     const current = Date.parse(currentDate);
@@ -90,20 +104,6 @@ module.exports = class Goal {
         resolve(habit);
       } catch (err) {
         reject("Habit could not be created");
-      }
-    });
-  }
-
-  update(id, streak) {
-    return new Promise(async (resolve, reject) => {
-      try {
-        await db.query(
-          "UPDATE habit SET streak=$1, last_completed=NOW() WHERE id = $2 RETURNING user_id",
-          [streak, id]
-        );
-        resolve("Habit was updated");
-      } catch (err) {
-        reject("Habit could not be updated");
       }
     });
   }
