@@ -95,8 +95,8 @@ module.exports = class Goal {
     } else {
       console.log(0);
       await db.query(
-        "UPDATE habit SET streak=$1, last_completed=NOW() WHERE id = $2 RETURNING user_id",
-        [streak, id]
+        "UPDATE habit SET streak=0, last_completed=NOW() WHERE id = $2 RETURNING user_id",
+        [id]
       );
     }
   }
