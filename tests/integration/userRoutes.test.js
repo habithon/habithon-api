@@ -1,12 +1,9 @@
 describe("user endpoints", () => {
   let api;
-  beforeEach(async () => {
-    await resetTestDB();
-  });
 
   beforeAll(async () => {
-    api = app.listen(5000, () =>
-      console.log("Test server running on port 5000")
+    api = app.listen(6000, () =>
+      console.log("Test server running on port 6000")
     );
   });
 
@@ -25,7 +22,16 @@ describe("user endpoints", () => {
     expect(res.body.success).toBe(true);
   });
 
-  it("Should not return a list of all goals in database", async () => {
+  it("Throw error if can't find user", async () => {
+    const res = await request(api).post("/user/login").send({
+      username: "ladybir",
+      password: "qwerty",
+    });
+    expect(res.statusCode).toEqual(401);
+    expect(res.body.success).toBe(false);
+  });
+
+  it("Throw error if can't validate credentials", async () => {
     const user = await request(api).post("/user/login").send({
       username: "ladybird",
       password: "test",
@@ -50,6 +56,16 @@ describe("user endpoints", () => {
   it("Throw error if user already exists", async () => {
     const res = await request(api).post("/user/register").send({
       username: "ladybird",
+      password: "qwerty",
+    });
+    expect(res.statusCode).toEqual(500);
+    expect(res.body).toHaveProperty("error");
+    expect(res.body.success).toBe(false);
+  });
+
+  it("Throw error if it can't create user", async () => {
+    const res = await request(api).post("/user/register").send({
+      usernam: "ladybird",
       password: "qwerty",
     });
     expect(res.statusCode).toEqual(500);

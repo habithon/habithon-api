@@ -8,8 +8,8 @@ async function createToken(userData) {
     {
       user_id: userData["id"],
     },
-    process.env["SECRET_PASSWORD"],
-    { expiresIn: 60 * 60 }
+    process.env["SECRET_PASSWORD"]
+    // { expiresIn: 60 * 60 }
   );
 
   return token;
